@@ -374,18 +374,21 @@ export default function Hero() {
                 { top: -6, right: -6, rotate: 90 },
                 { bottom: -6, right: -6, rotate: 180 },
                 { bottom: -6, left: -6, rotate: 270 },
-              ].map((pos, i) => (
-                <div key={i} className="hud-corner" style={{
-                  position: 'absolute',
-                  width: 26,
-                  height: 26,
-                  ...pos,
-                  transform: `rotate(${pos.rotate}deg)`,
-                  borderTop: '2px solid var(--accent)',
-                  borderLeft: '2px solid var(--accent)',
-                  filter: 'drop-shadow(0 0 6px rgba(0, 229, 255, 0.7))',
-                }} />
-              ))}
+              ].map((pos, i) => {
+                const { rotate, ...posStyle } = pos;
+                return (
+                  <div key={i} className="hud-corner" style={{
+                    position: 'absolute',
+                    width: 26,
+                    height: 26,
+                    ...posStyle,
+                    transform: `rotate(${rotate}deg)`,
+                    borderTop: '2px solid var(--accent)',
+                    borderLeft: '2px solid var(--accent)',
+                    filter: 'drop-shadow(0 0 6px rgba(0, 229, 255, 0.7))',
+                  }} />
+                );
+              })}
 
               {/* Tick marks around frame */}
               <svg
