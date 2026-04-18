@@ -1,0 +1,55 @@
+<svg width="520" height="520" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0f1520"/>
+      <stop offset="60%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#080b10"/>
+    </radialGradient>
+    <linearGradient id="rimLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0080ff" stop-opacity="0.6"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#00e5ff" stroke-opacity="0.06" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- bg -->
+  <rect width="520" height="520" fill="url(#bgGrad)"/>
+  <rect width="520" height="520" fill="url(#grid)"/>
+
+  <!-- silhouette -->
+  <g transform="translate(260,290)">
+    <!-- shoulders -->
+    <path d="M -180 230 Q -180 130 -100 90 L 100 90 Q 180 130 180 230 L -180 230 Z" fill="#141c2a" stroke="url(#rimLight)" stroke-width="1.5"/>
+    <!-- neck -->
+    <rect x="-28" y="30" width="56" height="70" fill="#141c2a" stroke="url(#rimLight)" stroke-width="1.2"/>
+    <!-- head -->
+    <ellipse cx="0" cy="-30" rx="85" ry="100" fill="#141c2a" stroke="url(#rimLight)" stroke-width="2" filter="url(#glow)"/>
+    <!-- hair top -->
+    <path d="M -82 -60 Q -70 -130 0 -130 Q 70 -130 82 -60 Q 70 -95 0 -95 Q -70 -95 -82 -60 Z" fill="#0a0e14" stroke="url(#rimLight)" stroke-width="1"/>
+    <!-- glasses -->
+    <g stroke="#00e5ff" stroke-width="2" fill="none" opacity="0.85">
+      <rect x="-60" y="-50" width="40" height="28" rx="4"/>
+      <rect x="20" y="-50" width="40" height="28" rx="4"/>
+      <line x1="-20" y1="-36" x2="20" y2="-36"/>
+    </g>
+    <!-- mustache hint -->
+    <path d="M -22 10 Q 0 4 22 10" stroke="#00e5ff" stroke-width="1.5" fill="none" opacity="0.6"/>
+  </g>
+
+  <!-- corner accent -->
+  <g stroke="#00e5ff" stroke-width="1.5" fill="none" opacity="0.7">
+    <path d="M 20 20 L 20 60 M 20 20 L 60 20"/>
+    <path d="M 500 20 L 500 60 M 500 20 L 460 20"/>
+    <path d="M 20 500 L 20 460 M 20 500 L 60 500"/>
+    <path d="M 500 500 L 500 460 M 500 500 L 460 500"/>
+  </g>
+</svg>
