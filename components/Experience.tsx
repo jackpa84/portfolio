@@ -68,8 +68,8 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section id="experiencia" className="section">
-      <div className="container">
+    <section id="experiencia" className="section" style={{ width: '100%', overflow: 'hidden' }}>
+      <div className="container" style={{ width: '100%' }}>
         <div className="section-label">// trajetória profissional</div>
         <h2 className="section-title">Experiência</h2>
         <div className="section-line" />
@@ -171,7 +171,38 @@ export default function Experience() {
           #experiencia .container > div > div > div {
             grid-template-columns: 1fr !important;
             gap: 12px !important;
+            padding-bottom: 40px !important;
           }
+          .card { padding: 20px !important; }
+        }
+
+        @media (max-width: 600px) {
+          #experiencia .container > div > div > div {
+            padding-bottom: 36px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          #experiencia .container > div {
+            position: relative;
+          }
+          #experiencia .container > div > div {
+            gap: 0 !important;
+          }
+          #experiencia .container > div > div > div {
+            grid-template-columns: 1fr !important;
+            gap: 8px !important;
+            padding-bottom: 28px !important;
+          }
+          #experiencia .container > div > div > div:last-child {
+            padding-bottom: 0 !important;
+          }
+          .card {
+            padding: 14px !important;
+          }
+          .card h3 { font-size: 16px !important; }
+          .card ul { margin-bottom: 12px !important; }
+          .tag { font-size: 10px !important; padding: 4px 8px !important; }
         }
       `}</style>
     </section>

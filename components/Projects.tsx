@@ -49,17 +49,19 @@ export default function Projects() {
       background: 'linear-gradient(180deg, transparent 0%, rgba(13, 17, 23, 0.5) 50%, transparent 100%)',
       borderTop: '1px solid rgba(0, 229, 255, 0.05)',
       borderBottom: '1px solid rgba(0, 229, 255, 0.05)',
+      width: '100%',
+      overflow: 'hidden',
     }}>
-      <div className="container">
+      <div className="container" style={{ width: '100%' }}>
         <div className="section-label">// código público</div>
         <h2 className="section-title">Projetos no GitHub</h2>
         <div className="section-line" />
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
           gap: 20,
-        }}>
+        }} className="projects-grid">
           {projects.map(proj => (
             <a
               key={proj.name}
@@ -129,6 +131,20 @@ export default function Projects() {
           </a>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .projects-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important; gap: 14px !important; }
+          .card { padding: 20px !important; }
+        }
+
+        @media (max-width: 480px) {
+          .projects-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+          .card { padding: 16px !important; }
+          .card p { font-size: 13px !important; }
+          .tag { font-size: 10px !important; padding: 4px 10px !important; }
+        }
+      `}</style>
     </section>
   )
 }

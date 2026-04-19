@@ -130,6 +130,12 @@ export default function Nav() {
           .mobile-menu-btn { display: block !important; }
           .logo-text { display: none; }
         }
+
+        @media (max-width: 480px) {
+          .mobile-menu-btn {
+            font-size: 11px !important;
+          }
+        }
       `}</style>
     </nav>
   )

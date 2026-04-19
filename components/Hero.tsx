@@ -43,6 +43,8 @@ export default function Hero() {
       paddingTop: 80,
       position: 'relative',
       overflow: 'hidden',
+      width: '100%',
+      maxWidth: '100vw',
     }}>
       {/* Decorative accent orbs */}
       <div style={{
@@ -68,18 +70,19 @@ export default function Hero() {
         filter: 'blur(30px)',
       }} />
 
-      <div className="container">
+      <div className="container" style={{ width: '100%' }}>
         <div className="hero-grid" style={{
           display: 'grid',
           gridTemplateColumns: '1.2fr 0.8fr',
           gap: 60,
           alignItems: 'center',
+          width: '100%',
         }}>
           {/* LEFT: text */}
-          <div style={{ maxWidth: 680 }}>
+          <div style={{ maxWidth: 680, width: '100%' }}>
             <div style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: 13,
+              fontSize: 'clamp(11px, 2.5vw, 13px)',
               color: 'var(--accent)',
               marginBottom: 24,
               display: 'inline-flex',
@@ -105,7 +108,7 @@ export default function Hero() {
 
             <h1 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(42px, 7vw, 82px)',
+              fontSize: 'clamp(32px, 6vw, 82px)',
               fontWeight: 700,
               lineHeight: 1.05,
               marginBottom: 6,
@@ -116,7 +119,7 @@ export default function Hero() {
             </h1>
             <h1 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(42px, 7vw, 82px)',
+              fontSize: 'clamp(32px, 6vw, 82px)',
               fontWeight: 700,
               lineHeight: 1.05,
               marginBottom: 28,
@@ -152,7 +155,7 @@ export default function Hero() {
             </div>
 
             <p style={{
-              fontSize: 17,
+              fontSize: 'clamp(14px, 3vw, 17px)',
               color: 'var(--text-secondary)',
               lineHeight: 1.75,
               maxWidth: 580,
@@ -164,41 +167,6 @@ export default function Hero() {
               Atualmente explorando o espaço de <span style={{ color: 'var(--accent)', fontWeight: 500 }}>IA aplicada</span>.
             </p>
 
-            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 56 }}>
-              <a href="#projetos" className="btn-primary">
-                Ver projetos →
-              </a>
-              <a href="#contato" className="btn-outline">
-                Entre em contato
-              </a>
-            </div>
-
-            {/* Stats row */}
-            <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
-              {[
-                { num: '16+', label: 'anos de experiência' },
-                { num: '500k+', label: 'eventos/dia processados' },
-                { num: '25%', label: 'redução tempo pagamento' },
-                { num: '22%', label: 'redução custos AWS' },
-              ].map(stat => (
-                <div key={stat.label}>
-                  <div style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 26,
-                    fontWeight: 700,
-                    color: 'var(--accent)',
-                    lineHeight: 1,
-                    marginBottom: 6,
-                    textShadow: '0 0 20px rgba(0, 229, 255, 0.3)',
-                  }}>
-                    {stat.num}
-                  </div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* RIGHT: photo */}
@@ -627,6 +595,27 @@ export default function Hero() {
           .holo-border { width: 276px !important; height: 276px !important; }
           .tick-marks { width: 280px !important; height: 280px !important; top: -10px !important; left: -10px !important; }
           .floating-badge { display: none; }
+        }
+
+        @media (max-width: 600px) {
+          .hero-photo-wrap .photo-frame { width: 180px !important; height: 180px !important; }
+          .rotating-ring { width: 220px !important; height: 220px !important; }
+          .rotating-ring-2 { width: 200px !important; height: 200px !important; }
+          .orbit-dots { width: 240px !important; height: 240px !important; }
+          .holo-border { width: 190px !important; height: 190px !important; }
+          .tick-marks { width: 200px !important; height: 200px !important; }
+        }
+
+        @media (max-width: 480px) {
+          .hero-grid { gap: 24px !important; }
+          .hero-photo-wrap { margin-bottom: 20px !important; }
+          .hero-photo-wrap .photo-frame { width: 140px !important; height: 140px !important; }
+          .rotating-ring { width: 170px !important; height: 170px !important; }
+          .rotating-ring-2 { width: 150px !important; height: 150px !important; }
+          .orbit-dots { width: 190px !important; height: 190px !important; }
+          .holo-border { width: 150px !important; height: 150px !important; }
+          .tick-marks { width: 160px !important; height: 160px !important; top: -8px !important; left: -8px !important; }
+          .status-chip { bottom: -8px !important; font-size: 8px !important; padding: 4px 10px !important; }
         }
       `}</style>
     </section>

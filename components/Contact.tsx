@@ -27,9 +27,9 @@ const contactLinks = [
 
 export default function Contact() {
   return (
-    <section id="contato" className="section">
-      <div className="container">
-        <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>
+    <section id="contato" className="section" style={{ width: '100%', overflow: 'hidden' }}>
+      <div className="container" style={{ width: '100%' }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center', width: '100%' }}>
           <div className="section-label" style={{ textAlign: 'center' }}>// vamos trabalhar juntos</div>
           <h2 className="section-title" style={{ textAlign: 'center' }}>
             Tem um projeto em mente?
@@ -37,7 +37,7 @@ export default function Contact() {
           <div className="section-line" style={{ margin: '0 auto 40px' }} />
 
           <p style={{
-            fontSize: 17,
+            fontSize: 'clamp(14px, 3vw, 17px)',
             color: 'var(--text-secondary)',
             lineHeight: 1.8,
             marginBottom: 52,
@@ -90,10 +90,30 @@ export default function Contact() {
       </div>
 
       <style>{`
+        @media (max-width: 768px) {
+          #contato .container > div {
+            max-width: 100% !important;
+          }
+          .card { padding: 18px !important; }
+        }
+
         @media (max-width: 600px) {
           #contato .container > div > div:last-child {
             grid-template-columns: 1fr !important;
+            gap: 12px !important;
           }
+        }
+
+        @media (max-width: 480px) {
+          #contato .container > div > p {
+            font-size: 14px !important;
+            margin-bottom: 32px !important;
+          }
+          #contato .container > div > div:first-of-type {
+            margin-bottom: 28px !important;
+          }
+          .card { padding: 14px !important; font-size: 12px !important; }
+          .card span { font-size: 16px !important; }
         }
       `}</style>
     </section>
