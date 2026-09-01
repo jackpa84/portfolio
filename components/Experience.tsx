@@ -1,13 +1,5 @@
 const experiences = [
   {
-    company: 'Iconit',
-    role: 'Desenvolvedor Full Stack Sênior',
-    period: 'Dez/2025 → Mar/2026',
-    current: false,
-    stack: ['PHP', 'Python', 'React', 'Next.js', 'MongoDB', 'PostgreSQL', 'Datadog', 'GCP'],
-    highlights: ['Análise e desenvolvimento de sistema', 'Infraestrutura GCP e monitoramento com Datadog'],
-  },
-  {
     company: 'ConnectTrend',
     role: 'Desenvolvedor Full Stack Sênior',
     period: 'Jan/2025 → Abr/2025',
