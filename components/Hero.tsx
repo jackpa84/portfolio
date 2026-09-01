@@ -167,6 +167,52 @@ export default function Hero() {
               Atualmente explorando o espaço de <span style={{ color: 'var(--accent)', fontWeight: 500 }}>IA aplicada</span>.
             </p>
 
+            {/* Video showcase */}
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              maxWidth: 520,
+              borderRadius: 16,
+              overflow: 'hidden',
+              border: '1px solid var(--border)',
+              background: 'var(--bg-card)',
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 229, 255, 0.08)',
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                padding: '10px 16px',
+                background: 'linear-gradient(to bottom, rgba(8, 11, 16, 0.9), transparent)',
+                zIndex: 2,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+              }}>
+                <span style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 10,
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  color: 'var(--accent)',
+                }}>
+                 feito com IA
+                </span>
+              </div>
+              <video
+                src="/Jackson_Pacheco__Impacto.mp4"
+                controls
+                preload="metadata"
+                style={{
+                  width: '100%',
+                  display: 'block',
+                  aspectRatio: '16/9',
+                  objectFit: 'cover',
+                }}
+              />
+            </div>
+
           </div>
 
           {/* RIGHT: photo */}
