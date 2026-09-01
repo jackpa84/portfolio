@@ -23,26 +23,31 @@ export default function BlogPage() {
   return (
     <section className="section" style={{ paddingTop: 140 }}>
       <div className="container">
-        <span className="section-label">// blog</span>
-        <h1 className="section-title">Artigos</h1>
-        <p
-          style={{
-            color: 'var(--text-secondary)',
-            maxWidth: 560,
-            marginBottom: 48,
-            fontSize: 16,
-          }}
-        >
-          Reflexões sobre inteligência artificial, engenharia de software e
-          tecnologia.
-        </p>
+        <div style={{ marginBottom: 64 }}>
+          <span className="section-label">// blog</span>
+          <h1 className="section-title">Artigos</h1>
+          <p
+            style={{
+              color: 'var(--text-secondary)',
+              maxWidth: 600,
+              fontSize: 18,
+              lineHeight: 1.7,
+            }}
+          >
+            Reflexões sobre inteligência artificial, engenharia de software e
+            tecnologia. Escrevo sobre o que aprendo e construo.
+          </p>
+        </div>
 
         <div className="blog-grid">
-          {posts.map((post) => (
+          {posts.map((post, index) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
               className="card blog-card"
+              style={{
+                animationDelay: `${index * 0.1}s`,
+              }}
             >
               <div className="blog-card-header">
                 <time className="blog-date" dateTime={post.date}>
@@ -66,6 +71,18 @@ export default function BlogPage() {
             </Link>
           ))}
         </div>
+
+        {posts.length === 0 && (
+          <div
+            style={{
+              textAlign: 'center',
+              padding: '80px 20px',
+              color: 'var(--text-muted)',
+            }}
+          >
+            <p style={{ fontSize: 18 }}>Nenhum artigo publicado ainda.</p>
+          </div>
+        )}
       </div>
     </section>
   )

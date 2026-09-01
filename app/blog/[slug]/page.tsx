@@ -39,6 +39,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+function extractHeadings(content: string) {
+  const headings: { level: number; text: string; id: string }[] = []
+  const lines = content.trim().split('\n')
+
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (trimmed.startsWith('## ')) {
+      const text = trimmed.slice(3)
+      const id = text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+      headings.push({ level: 2, text, id })
+    } else if (trimmed.startsWith('### ')) {
+      const text = trimmed.slice(4)
+      const id = text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+      headings.push({ level: 3, text, id })
+    }
+  }
+
+  return headings
+}
+
 function renderMarkdown(content: string) {
   const lines = content.trim().split('\n')
   const html: string[] = []
@@ -69,18 +99,32 @@ function renderMarkdown(content: string) {
     }
 
     if (trimmed.startsWith('## ')) {
-      html.push(`<h2 class="blog-h2">${trimmed.slice(3)}</h2>`)
+      const text = trimmed.slice(3)
+      const id = text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+      html.push(`<h2 id="${id}">${text}</h2>`)
     } else if (trimmed.startsWith('### ')) {
-      html.push(`<h3 class="blog-h3">${trimmed.slice(4)}</h3>`)
+      const text = trimmed.slice(4)
+      const id = text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+      html.push(`<h3 id="${id}">${text}</h3>`)
     } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       if (!inList) {
-        html.push('<ul class="blog-list">')
+        html.push('<ul>')
         inList = true
       }
       html.push(`<li>${renderInline(trimmed.slice(2))}</li>`)
     } else if (trimmed.startsWith('> ')) {
       html.push(
-        `<blockquote class="blog-quote">${renderInline(trimmed.slice(2))}</blockquote>`
+        `<blockquote>${renderInline(trimmed.slice(2))}</blockquote>`
       )
     } else if (trimmed === '') {
       html.push('')
@@ -107,7 +151,7 @@ function renderTable(rows: string[]): string {
       .map((c) => c.trim())
   )
 
-  let html = '<div class="blog-table-wrap"><table class="blog-table"><thead><tr>'
+  let html = '<div class="blog-table-wrap"><table><thead><tr>'
   header.forEach((h) => {
     html += `<th>${renderInline(h)}</th>`
   })
@@ -127,10 +171,10 @@ function renderInline(text: string): string {
   return text
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/`(.+?)`/g, '<code class="blog-code">$1</code>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
     .replace(
       /\[(.+?)\]\((.+?)\)/g,
-      '<a href="$2" class="blog-link" target="_blank" rel="noopener noreferrer">$1</a>'
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
     )
 }
 
@@ -140,6 +184,7 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound()
 
   const contentHtml = renderMarkdown(post.content)
+  const headings = extractHeadings(post.content)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -167,7 +212,7 @@ export default async function BlogPostPage({ params }: Props) {
     <main className="grid-bg">
       <Nav />
       <article className="section" style={{ paddingTop: 140 }}>
-        <div className="container" style={{ maxWidth: 780 }}>
+        <div className="container" style={{ maxWidth: 860 }}>
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -177,8 +222,8 @@ export default async function BlogPostPage({ params }: Props) {
             ← Voltar ao blog
           </Link>
 
-          <header style={{ marginBottom: 48 }}>
-            <div className="blog-tags" style={{ marginBottom: 16 }}>
+          <header style={{ marginBottom: 56 }}>
+            <div className="blog-tags" style={{ marginBottom: 20 }}>
               {post.tags.map((tag) => (
                 <span key={tag} className="tag">
                   {tag}
@@ -195,15 +240,113 @@ export default async function BlogPostPage({ params }: Props) {
                   year: 'numeric',
                 })}
               </time>
-              <span>·</span>
+              <span style={{ color: 'var(--text-muted)' }}>·</span>
               <span>{post.author}</span>
             </div>
           </header>
+
+          {headings.length > 1 && (
+            <nav
+              style={{
+                marginBottom: 48,
+                padding: '24px 28px',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                borderRadius: 12,
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 11,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: 'var(--accent)',
+                  display: 'block',
+                  marginBottom: 14,
+                }}
+              >
+                Neste artigo
+              </span>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {headings.map((h) => (
+                  <li
+                    key={h.id}
+                    style={{
+                      paddingLeft: h.level === 3 ? 20 : 0,
+                      marginBottom: 8,
+                    }}
+                  >
+                    <a
+                      href={`#${h.id}`}
+                      style={{
+                        fontSize: 14,
+                        color: 'var(--text-secondary)',
+                        transition: 'color 0.2s',
+                      }}
+                    >
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
 
           <div
             className="blog-content"
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
+
+          <div
+            style={{
+              marginTop: 64,
+              paddingTop: 32,
+              borderTop: '1px solid var(--border)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 16,
+            }}
+          >
+            <div
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, var(--accent), var(--accent-soft))',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontFamily: 'var(--font-display)',
+                fontWeight: 700,
+                fontSize: 18,
+                color: 'var(--bg-primary)',
+              }}
+            >
+              JP
+            </div>
+            <div>
+              <div
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 600,
+                  fontSize: 15,
+                  color: 'var(--text-primary)',
+                }}
+              >
+                {post.author}
+              </div>
+              <div
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 12,
+                  color: 'var(--text-muted)',
+                }}
+              >
+                Full Stack Developer
+              </div>
+            </div>
+          </div>
         </div>
       </article>
       <Footer />
